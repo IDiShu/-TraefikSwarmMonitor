@@ -1,4 +1,4 @@
-# 🧭 DevOps Swarm Project
+# 🧭 TraefikSwarmMonitor
 
 ## 📖 О проекте
 
