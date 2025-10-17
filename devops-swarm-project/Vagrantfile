@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANT_REQUIRE_VERSION = ">= 2.2.0"
+
+Vagrant.configure("2") do |config|
+  # Общие настройки для всех VM
+  config.vm.box = "ubuntu/focal64"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 1
+  end
+
+# Manager
+config.vm.define "manager" do |manager|
+  manager.vm.hostname = "manager"
+  manager.vm.network "private_network", ip: "192.168.56.10"
+  manager.vm.provision "shell", path: "provision/setup-full-stack.sh"
+end
+
+# Prod1
+config.vm.define "prod1" do |prod1|
+  prod1.vm.hostname = "prod1"
+  prod1.vm.network "private_network", ip: "192.168.56.11"
+  prod1.vm.provision "shell", path: "provision/install-docker.sh"
+  prod1.vm.provision "shell", path: "provision/join-swarm-node.sh", args: ["192.168.56.10"]
+end
+
+# Prod2
+config.vm.define "prod2" do |prod2|
+  prod2.vm.hostname = "prod2"
+  prod2.vm.network "private_network", ip: "192.168.56.12"
+  prod2.vm.provision "shell", path: "provision/install-docker.sh"
+  prod2.vm.provision "shell", path: "provision/join-swarm-node.sh", args: ["192.168.56.10"]
+end
+end

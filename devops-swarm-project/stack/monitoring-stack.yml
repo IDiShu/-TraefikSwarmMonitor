@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - /vagrant/configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - /vagrant/configs/grafana/provisioning:/etc/grafana/provisioning
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+networks:
+  default:
+    driver: overlay
