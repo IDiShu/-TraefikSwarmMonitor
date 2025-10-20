@@ -26,29 +26,43 @@
 
 ```
 devops-swarm-project/
-├── Vagrantfile
-├── stack/
-│   └── docker-stack.yml
-├── scripts/
-│   ├── install_docker.sh
-│   ├── join_worker.sh
-│   └── swarm_init.sh
-├── app/
-│   ├── web/
-│   │   ├── Dockerfile
-│   │   ├── nginx.conf
-│   │   ├── supervisord.conf
-│   │   └── src/
-│   │       ├── index.html
-│   │       └── index.php
-│   └── monitor/
-│       ├── prometheus/
-│       │   └── prometheus.yml
-│       ├── grafana/
-│       │   ├── dashboards/
-│       │   └── provisioning/
-│       ├── node-exporter/
-│       └── docker-compose.yml
+│  Vagrantfile
+├───app
+│   └───web
+│   │      └──Dockerfile
+│   │      └──nginx.conf
+│   │      └──supervisord.conf
+│   └──src
+│         └──index.html
+├───configs
+│   ├───grafana
+│   │         └───provisioning
+│   │       ├───dashboards
+│   │       │            └──node_exporter.json
+│   │       │            └──node_exporter.yml
+│   │       └───datasources
+│   │                     └──prometheus.yml
+│   ├───prometheus
+│   │            └──prometheus.yml
+│   │
+│   └───traefik
+│             └──traefik.yml
+├───logs
+│   ├───traefik
+│   │         └──access.log
+│   │
+│   └───web
+│         └──output.log
+│
+├───provision
+│           └──install-docker.sh
+│            └──join-swarm-node.sh
+│            └──setup-full-stack.sh
+│            └──setup-swarm-manager.sh
+│
+└───stack
+        └──docker-stack.yml
+        └──monitoring-stack.yml
 └── README.md
 ```
 
