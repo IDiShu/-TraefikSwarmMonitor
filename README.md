@@ -182,8 +182,8 @@ echo "<h1>Hello from " . gethostname() . "</h1>";
 После написания Dockerfile:
 
 ```bash
-docker build -t idishui/web-demo:latest .
-docker save -o /vagrant/idishui_web_demo.tar idishui/web-demo:latest
+docker build -tyourninkname/web-demo:latest .
+docker save -o /vagrant/idishui_web_demo.taryourninkname/web-demo:latest
 ```
 
 На других нодах (prod1, prod2):
@@ -230,7 +230,7 @@ services:
           - node.role == manager
 
   web:
-    image: idishui/web-demo:latest
+    image:yourninkname/web-demo:latest
     networks:
       - webnet
     deploy:
